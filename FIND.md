@@ -158,12 +158,152 @@ Ownership and Permissions:
 	6.  -user username`: Search for files owned by a specific user. `-group groupname`: Search for files owned by a specific group.
 	
 			> sudo find / -user diwakar > diwakarfiles &
+			> sudo find / -group root > rootfiles &
+			> sudo find / -perm 777 > fullaccess_files &
+			
+Actions
+		
+	7. Executing a Shell Command :  -exec command {} \;
+	
+		[diwakar@devops ~]$ find . -type f -exec ls -l {} \;
+		
+		-rw-r--r--. 1 diwakar root 18 Aug  9  2021 ./.bash_logout
+		-rw-r--r--. 1 diwakar root 141 Aug  9  2021 ./.bash_profile
+		-rw-r--r--. 1 diwakar root 492 Aug  9  2021 ./.bashrc
+		-rw-------. 1 diwakar root 4226 Sep 29 12:44 ./.bash_history
+		-rw-r--r--. 1 diwakar root 12 Sep 29 08:03 ./file1
+		-rw-r--r--. 1 diwakar root 13 Sep 29 03:48 ./story
+		
+	8.Executing a custom script : find . -type d -exec ./customscipt.sh {} \;
+	
+		[diwakar@devops ~]$ find -type d -exec ./customscript.sh {} \;
+		total 712
+		-rw-r--r--. 1 diwakar root     135 Sep 29 06:59 block_files
+		-rw-r--r--. 1 diwakar root    1932 Sep 29 06:59 character_files
+		-rwxr-xr-x. 1 diwakar root      74 Sep 29 22:58 customscript.sh
+		-rw-r--r--. 1 diwakar root       0 Sep 29 22:36 cutomscript
+		-rw-r--r--. 1 diwakar root       0 Sep 29 22:36 cutomscript.sh
+		-rw-r--r--. 1 diwakar root   29656 Sep 29 12:28 diwakarfiles
+		-rw-r--r--. 1 diwakar root 5242880 Sep 29 06:46 error
+		-rw-r--r--. 1 diwakar root      12 Sep 29 08:03 file1
+		drwxr-xr-x. 2 diwakar root       6 Sep 29 08:03 file10
+		drwxr-xr-x. 2 diwakar root       6 Sep 29 08:03 file2
+		
+		
+	9.Renaming Files : find . -type f -name "*.txt" -exec mv {} backup_{} \;
+	
+		[diwakar@devops ~]$ ls
+		block_files      customscript.sh  cutomscript.sh  error  file10  file3  file5  file7  file9       nexample.txt  pipe_files    story
+		character_files  cutomscript      diwakarfiles    file1  file2   file4  file6  file8  link_files  output        socket_files  text_processing.txt
+		
+		[diwakar@devops ~]$ find . -type f -name "*.sh" -exec mv {} {}_backup \;
+		[diwakar@devops ~]$ ls
+		block_files      customscript.sh_backup  cutomscript.sh_backup  error  file10  file3  file5  file7  file9       nexample.txt  pipe_files    story
+		character_files  cutomscript             diwakarfiles           file1  file2   file4  file6  file8  link_files  output        socket_files  text_processing.txt
+		
+	10.  Deleting Files: find . -type f -name "file_to_delete.txt" -exec rm {} \;
+	
+		[diwakar@devops ~]$ ls
+		block_files      customscript.sh_backup  cutomscript.sh_backup  error   file2  file4  file6  file8  link_files    output      socket_files  text_processing.txt
+		character_files  cutomscript             diwakarfiles           file10  file3  file5  file7  file9  nexample.txt  pipe_files  story
+		[diwakar@devops ~]$ find . -type d -name "file*" -exec rm {} \;
+		
+		[diwakar@devops ~]$ ls
+		block_files      customscript.sh_backup  cutomscript.sh_backup  error       nexample.txt  pipe_files    story
+		character_files  cutomscript             diwakarfiles           link_files  output        socket_files  text_processing.txt
+		
+	11. Counting Files: find . -type f -name "*.log" -exec echo 1 \; | wc -l
+	
+		[diwakar@devops ~]$ find . -type f  -exec echo 1 \;|wc -l
+		19
+		[diwakar@devops ~]$ ls -l
+		total 708
+		-rw-r--r--. 1 diwakar root     135 Sep 29 06:59 block_files
+		-rw-r--r--. 1 diwakar root    1932 Sep 29 06:59 character_files
+		-rwxr-xr-x. 1 diwakar root      74 Sep 29 22:58 customscript.sh_backup
+		-rw-r--r--. 1 diwakar root       0 Sep 29 22:36 cutomscript
+		-rw-r--r--. 1 diwakar root       0 Sep 29 22:36 cutomscript.sh_backup
+		-rw-r--r--. 1 diwakar root   29656 Sep 29 12:28 diwakarfiles
+		-rw-r--r--. 1 diwakar root 5242880 Sep 29 06:46 error
+		-rw-r--r--. 1 diwakar root  646050 Sep 29 07:00 link_files
+		-rw-r--r--. 1 diwakar root      43 Sep 29 05:27 nexample.txt
+		-rw-r--r--. 1 diwakar root      69 Sep 29 03:46 output
+		-rw-r--r--. 1 diwakar root     248 Sep 29 07:01 pipe_files
+		-rw-r--r--. 1 diwakar root     883 Sep 29 07:00 socket_files
+		-rw-r--r--. 1 diwakar root      13 Sep 29 03:48 story
+		-rw-r--r--. 1 diwakar root    6984 Sep 29 06:42 text_processing.txt
+		
+Exercises 
+		
+	Basic Exercises:
+		
+			1. Find all files in the current directory and its subdirectories.
+			2. Find all directories in the current directory and its subdirectories.
+			3. Find all `.txt` files in the current directory and its subdirectories.
+			4. Find all files modified within the last 7 days in the current directory.
+			5. Find all directories with the word "backup" in their names in the current directory.
+		
+	Intermediate Exercises:
+		
+			6. Find all files larger than 1MB in the `/home` directory.
+			7. Find all empty files (size 0 bytes) in the `/tmp` directory.
+			8. Find all `.log` files in the `/var/log` directory and its subdirectories.
+			9. Find all files in the `/etc` directory modified more than 90 days ago.
+			10. Find all executable files (files with execute permissions) in your home directory.
+		
+	Advanced Exercises:
+		
+			11. Find all files owned by a specific user (replace "username" with the actual username).
+			12. Find all files that have the word "error" in their content (search within file content).
+			13. Find all files in the `/opt` directory and its subdirectories that have not been accessed in the last 30 days.
+			14. Find all files with names that contain exactly three digits.
+			15. Find all files in the `/var/www` directory that have both read and write permissions for the owner.
+		
+	Challenging Exercises:
+		
+			16. Find and delete all empty directories in the `/tmp` directory.
+			17. Find and archive (using `tar`) all `.jpg` files in the `/media` directory and its subdirectories.
+			18. Find all files with names that start with a vowel (a, e, i, o, u).
+			19. Find all symbolic links in your home directory.
+			20. Find all files in the `/usr/bin` directory that are larger than 5MB and have not been modified in the last 60 days.
+	
 		
 	
+				
+	Answers 
+	
+	Basic Exercises:
+			
+				1) find . -type f
+				2) find . -type d
+				3) find . -type f -name "*.txt"
+				4) find . -type f -mtime -7
+				5) find . -type d -name "*backup*"
+			
+	Intermediate Exercises:
+			
+				1) find /home -type f -size +1M
+				2) find /tmp -type f -empty
+				3) find /var/log -type f -name "*.log"
+				4) find /etc -type f -mtime +90
+				5) find ~/ -type f -executable
+			
+	Advanced Exercises:
+			
+				1) find / -type f -user username
+				2) grep -rl "error" /path/to/search
+				3) find /opt -type f -atime +30
+				4) find / -type f -regex '.*[0-9][0-9][0-9].*'
+				5) find /var/www -type f -perm -u=rx
+			
+	Challenging Exercises:
+			
+				1) find /tmp -type d -empty -exec rmdir {} \;
+				2) find /media -type f -name "*.jpg" -exec tar czvf images.tar.gz {} +
+				3) find / -type f -name '[aeiouAEIOU]*'
+				4) find ~/ -type l
+				5) find /usr/bin -type f -size +5M -mtime +60
+	
+		
+		
 
-		
-		
-	
-	
-		
-		
