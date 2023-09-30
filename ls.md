@@ -214,4 +214,4 @@ drwxr-xr-x. 2 diwakar root    6 Sep 30 10:54 dir5
 
 
 ```
-![image](https://github.com/valivarthi007/viswajith/assets/115709702/d8adbb21-56d9-401d-b7ce-176e1365e190)
+
